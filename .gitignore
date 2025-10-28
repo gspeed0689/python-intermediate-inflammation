@@ -16,3 +16,4 @@
 # Class specific instruction 
 requirements.txt
 .venv/* 
+uv.lock
