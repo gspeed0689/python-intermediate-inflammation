@@ -27,4 +27,4 @@ jobs:
         run: | 
           python3 -m pytest --cov=inflammation.models tests/test_models.py
       - name: Check Style
-        run: python3 -m ruff check --exit-zero --output-formta=github inflammation
+        run: python3 -m ruff check --exit-zero --output-format=github inflammation
