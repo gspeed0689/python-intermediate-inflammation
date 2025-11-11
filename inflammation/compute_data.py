@@ -9,14 +9,12 @@ from abc import abstractmethod, ABC
 from inflammation import models, views
 
 
-def analyse_data(data_dir):
-    """Calculates the standard deviation by day between datasets.
+def analyse_data(data: np.array):
+    """Calculates the standard deviation across days from a dataset. 
 
-    Gets all the inflammation data from CSV files within a directory,
-    works out the mean inflammation value for each day across all datasets,
-    then plots the graphs of standard deviation of these means."""
-    data = CSVDataSource(data_dir).load_data()
-
+    Args:
+        data (np.array): data array object loaded from a DataSource (CSVDataSource) and the .load_data() method. 
+    """
     means_by_day = map(models.daily_mean, data)
     means_by_day_matrix = np.stack(list(means_by_day))
 
