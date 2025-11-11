@@ -15,7 +15,7 @@ def analyse_data(data_dir):
     Gets all the inflammation data from CSV files within a directory,
     works out the mean inflammation value for each day across all datasets,
     then plots the graphs of standard deviation of these means."""
-    data = load_csv_data(data_dir)
+    data = CSVDataSource(data_dir).load_data()
 
     means_by_day = map(models.daily_mean, data)
     means_by_day_matrix = np.stack(list(means_by_day))
@@ -35,3 +35,16 @@ def load_csv_data(data_dir, filename_template='inflammation*.csv'):
     data = map(models.load_csv, CSVs)
     return data
 
+class DataSource(ABC):
+    @abstractmethod
+    def load_data():
+        pass
+
+class CSVDataSource(DataSource):
+    def __init__(self, data_dir, filename_template='inflammation*.csv'):
+        self.data_dir = pathlib.Path(data_dir)
+        self.filename_template = filename_template
+    def load_data(self):
+        CSVs = list(self.data_dir.rglob(self.filename_template))
+        data = map(models.load_csv, CSVs)
+        return data
